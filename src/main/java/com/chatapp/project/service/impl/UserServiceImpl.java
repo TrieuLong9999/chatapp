@@ -2,9 +2,15 @@ package com.chatapp.project.service.impl;
 
 import com.chatapp.project.entity.UserEntity;
 import com.chatapp.project.form.request.user.RegisterRequest;
+import com.chatapp.project.form.response.user.UserView;
 import com.chatapp.project.repository.UserRepository;
 import com.chatapp.project.service.UserService;
+import com.chatapp.project.utils.DataUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -44,6 +50,12 @@ public class UserServiceImpl implements UserService {
     @Override
     public Optional<UserEntity> findByUsername(String userName) {
         return userRepository.findByUsername(userName);
+    }
+
+    @Override
+    public Page<UserView> findAllUser(String username, int page, int size) {
+        Pageable pageable = PageRequest.of(page, size, Sort.by("username").ascending());
+        return userRepository.findByUsernameContainingIgnoreCase(username, pageable);
     }
 
 }

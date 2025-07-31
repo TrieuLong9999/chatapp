@@ -44,12 +44,13 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<?> register(@RequestBody RegisterRequest registerRequest) {
+    public BaseResponse<?> register(@RequestBody RegisterRequest registerRequest) {
         try {
             UserEntity user = userService.registerUser(registerRequest);
-            return ResponseEntity.ok("Đăng ký thành công cho user: " + user.getUsername());
+
+            return BaseResponse.success(user);
         } catch (RuntimeException e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
+            return BaseResponse.error(ErrorCode.ERROR);
         }
     }
     @PostMapping("/refresh-token")
