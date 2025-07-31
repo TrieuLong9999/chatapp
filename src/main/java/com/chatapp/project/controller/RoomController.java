@@ -68,6 +68,7 @@ public class RoomController {
 
         List<Room> rooms = roomService.findByUsersId(currentUserId);
 
+
         return ResponseEntity.ok(rooms);
     }
 }
