@@ -16,7 +16,8 @@ pipeline {
 
         stage('Build') {
             steps {
-                // Build project bằng Maven
+                // Cấp quyền thực thi cho mvnw trước khi chạy
+                sh 'chmod +x mvnw'
                 sh './mvnw clean package -DskipTests'
             }
         }
